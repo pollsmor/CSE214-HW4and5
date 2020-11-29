@@ -1,14 +1,17 @@
 import java.util.Arrays;
 import java.util.List;
+import java.util.Collections;
 
 public class InsertionSort<E extends Comparable<E>> implements Sorter<E> {
 
     private List<E> elements;
     private Order   order;
+    private StringBuilder steps; // add on to this for every iteration of sort()
 
     public InsertionSort(List<E> elements, Order order) {
         this.elements = elements;
         this.order    = order;
+        steps = new StringBuilder();
     }
 
     @Override
@@ -18,7 +21,38 @@ public class InsertionSort<E extends Comparable<E>> implements Sorter<E> {
 
     @Override
     public void sort() {
-        // todo
+        for (int i = 1; i < elements.size(); i++) { // Start from 1 as we assume 0 is "sorted" already
+            // Showing each step of the algorithm
+            steps.append(elements.get(i));
+            steps.append(" :: ");
+            steps.append(elements);
+            steps.append("\n");
+
+            E item = elements.get(i);
+            int j = i - 1; // to loop backwards from the element to be inspected
+
+            while (j >= 0 && elements.get(j).compareTo(item) > 0) {
+                elements.set(j + 1, elements.get(j)); // keep shifting elements to the right
+                j--;
+            }
+
+            elements.set(j + 1, item);
+        }
+
+        steps.append(elements);
+
+        if (order == Order.DECREASING) Collections.reverse(elements);
+    }
+
+    private void sortIncreasing() {
+        for (int i = 1; i < elements.size(); i++) { // Start from 1 as we assume 0 is "sorted" already
+            E item = elements.get(i);
+
+        }
+    }
+
+    private void sortDecreasing() {
+
     }
 
     /**
@@ -43,7 +77,7 @@ public class InsertionSort<E extends Comparable<E>> implements Sorter<E> {
      */
     @Override
     public String show() {
-        return null; // todo
+        return steps.toString();
     }
 
     /**

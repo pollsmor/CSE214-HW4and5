@@ -18,7 +18,17 @@ public class QuickSort<E extends Comparable<E>> implements Sorter<E> {
 
     @Override
     public void sort() {
-        // todo
+        // Uses helper methods to distinguish between sorting by inc/dec order
+        if (order == Order.INCREASING) sortIncreasing();
+        else sortDecreasing();
+    }
+
+    private void sortIncreasing() {
+
+    }
+
+    private void sortDecreasing() {
+
     }
 
     /**
