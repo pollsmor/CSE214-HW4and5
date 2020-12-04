@@ -27,14 +27,13 @@ public class QuickSort<E extends Comparable<E>> implements Sorter<E> {
 
     // Need a helper function with extra arguments
     private void sort(int lo, int hi) {
-        if (hi > lo) {
+        if (hi >= lo) {
             int pivot;
             if (order == Order.INCREASING) pivot = partitionInc(lo, hi); // pivot is already sorted, do not perform any operations on it
             else pivot = partitionDec(lo, hi);
 
             sort(lo, pivot - 1);
             sort(pivot + 1, hi);
-
         }
     }
 
@@ -47,18 +46,16 @@ public class QuickSort<E extends Comparable<E>> implements Sorter<E> {
 
     private int partitionInc(int lo, int hi) {
         E pivot = elements.get(lo); // use first element as pivot
-        int i = lo + 1; // LtR counter
+        int i = lo; // LtR counter
         int j = hi; // RtL counter
 
         while (j >= i) {
-            // I don't know why, but this just doesn't behave like partitionDec unless I put this conditional here.
-            // Without it, the show method has a few extra steps and the last line isn't an "ending step" (i.e. pivot changes).
-            if (j != i) {
-                steps.append(pivot);
-                steps.append(" :: ");
-                steps.append(elements);
-                steps.append("\n");
-            }
+            i += 1; // so that if lo and hi are equal this loop still runs
+
+            steps.append(pivot);
+            steps.append(" :: ");
+            steps.append(elements);
+            steps.append("\n");
 
             while (i <= j && elements.get(i).compareTo(pivot) <= 0) i++; // look for larger than pivot
             while (i <= j && elements.get(j).compareTo(pivot) > 0) j--; // look for smaller than pivot
@@ -76,15 +73,21 @@ public class QuickSort<E extends Comparable<E>> implements Sorter<E> {
             return j; // new pivot's index is now j
         }
 
+        steps.append("  :: ");
+        steps.append(elements);
+        steps.append("\n");
+
         return lo; // lo-index element is in the correct spot, is the pivot still
     }
 
     private int partitionDec(int lo, int hi) {
         E pivot = elements.get(lo); // use first element as pivot
-        int i = lo + 1; // LtR counter
+        int i = lo; // LtR counter
         int j = hi; // RtL counter
 
         while (j >= i) {
+            i += 1; // so that if lo and hi are equal this loop still runs
+
             steps.append(pivot);
             steps.append(" :: ");
             steps.append(elements);
@@ -105,6 +108,10 @@ public class QuickSort<E extends Comparable<E>> implements Sorter<E> {
 
             return j; // new pivot's index is now j
         }
+
+        steps.append("  :: ");
+        steps.append(elements);
+        steps.append("\n");
 
         return lo; // lo-index element is in the correct spot, is the pivot still
     }
@@ -137,15 +144,15 @@ public class QuickSort<E extends Comparable<E>> implements Sorter<E> {
         //Sorter<Integer> intsorter = new QuickSort<>(Arrays.asList(4, 87, 70, 6), Order.INCREASING);
         //Sorter<Integer> intsorter = new QuickSort<>(Arrays.asList(5, 2, 9, 3, 8, 4, 0, 1, 6, 7), Order.INCREASING);
         intsorter.sort();
-        System.out.println(intsorter.show());
-        System.out.println(intsorter.getList());
+        //System.out.println(intsorter.show());
+        //System.out.println(intsorter.getList());
         // NOTE: the list shown at the end of the string printed after calling show() MUST be identical to the result
         // calling getList() after calling sort(). That is, the backing list must actually be changed as is shown by the
         // result of the show() method.
 
-        //Sorter<Integer> intsorter2 = new QuickSort<>(Arrays.asList(6, 4, 9, 5, 1, 8, 2, 7, 3), Order.DECREASING);
+        Sorter<Integer> intsorter2 = new QuickSort<>(Arrays.asList(6, 4, 9, 5, 1, 8, 2, 7, 3), Order.DECREASING);
         //Sorter<Integer> intsorter2 = new QuickSort<>(Arrays.asList(66, 44, 99, 55, 11, 88, 22, 77, 33), Order.DECREASING);
-        Sorter<Integer> intsorter2 = new QuickSort<>(Arrays.asList(6, 4, 9, 5, 1, 8, 2, 7, 3, 15, 11, 87, 76, 61, 19, 6471, 69, 42, 614, 761, 6189, 618, 919, 618, 511, 71, 32, 131, 64, 89, 444, 10, 77, 293), Order.DECREASING);
+        //Sorter<Integer> intsorter2 = new QuickSort<>(Arrays.asList(6, 4, 9, 5, 1, 8, 2, 7, 3, 15, 11, 87, 76, 61, 19, 6471, 69, 42, 614, 761, 6189, 618, 919, 618, 511, 71, 32, 131, 64, 89, 444, 10, 77, 293), Order.DECREASING);
         //Sorter<Integer> intsorter2 = new QuickSort<>(Arrays.asList(4, 87, 70, 6), Order.DECREASING);
         //Sorter<Integer> intsorter2 = new QuickSort<>(Arrays.asList(5, 2, 9, 3, 8, 4, 0, 1, 6, 7), Order.DECREASING);
         intsorter2.sort();
