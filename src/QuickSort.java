@@ -20,6 +20,8 @@ public class QuickSort<E extends Comparable<E>> implements Sorter<E> {
 
     @Override
     public void sort() {
+        if (elements == null) throw new NullPointerException("Can't sort a null array.");
+
         // No splitting a 0 or 1-length list and is already sorted, so hardcode it out
         if (elements.size() <= 1) return;
         sort(0, elements.size() - 1);
@@ -138,14 +140,15 @@ public class QuickSort<E extends Comparable<E>> implements Sorter<E> {
     }
 
     public static void main(String... args) {
+        //Sorter<Integer> intsorter = new QuickSort<>(null, Order.INCREASING);
         Sorter<Integer> intsorter = new QuickSort<>(Arrays.asList(6, 4, 9, 5, 1, 8, 2, 7, 3), Order.INCREASING);
         //Sorter<Integer> intsorter = new QuickSort<>(Arrays.asList(66, 44, 99, 55, 11, 88, 22, 77, 33), Order.INCREASING);
         //Sorter<Integer> intsorter = new QuickSort<>(Arrays.asList(6, 4, 9, 5, 1, 8, 2, 7, 3, 15, 11, 87, 76, 61, 19, 6471, 69, 42, 614, 761, 6189, 618, 919, 618, 511, 71, 32, 131, 64, 89, 444, 10, 77, 293), Order.INCREASING);
         //Sorter<Integer> intsorter = new QuickSort<>(Arrays.asList(4, 87, 70, 6), Order.INCREASING);
         //Sorter<Integer> intsorter = new QuickSort<>(Arrays.asList(5, 2, 9, 3, 8, 4, 0, 1, 6, 7), Order.INCREASING);
         intsorter.sort();
-        //System.out.println(intsorter.show());
-        //System.out.println(intsorter.getList());
+        System.out.println(intsorter.show());
+        System.out.println(intsorter.getList());
         // NOTE: the list shown at the end of the string printed after calling show() MUST be identical to the result
         // calling getList() after calling sort(). That is, the backing list must actually be changed as is shown by the
         // result of the show() method.

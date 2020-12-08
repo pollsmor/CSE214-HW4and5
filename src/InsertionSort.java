@@ -20,6 +20,8 @@ public class InsertionSort<E extends Comparable<E>> implements Sorter<E> {
 
     @Override
     public void sort() {
+        if (elements == null) throw new NullPointerException("Can't sort a null array.");
+
         if (order == Order.INCREASING) sortIncreasing();
         else sortDecreasing();
     }
